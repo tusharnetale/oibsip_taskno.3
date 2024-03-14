@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+</head>
+
+
+  <body class="bg-gray-200 h-screen flex justify-center items-center">
+    <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
+        <h1 class="text-2xl font-bold mb-4">Temperature Converter</h1>
+        <div class="mb-4">
+            <label for="temperature" class="block text-gray-700">Temperature:</label>
+            <input type="text" id="temperature" class="form-input mt-1 block w-full" placeholder="Enter temperature...">
+            <p id="error-msg" class="text-red-500 text-sm mt-1 hidden">Please enter a valid temperature.</p>
+        </div>
+        <div class="mb-4">
+            <label for="unit" class="block text-gray-700">Unit:</label>
+            <select id="unit" class="form-select mt-1 block w-full">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <button id="convert-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Convert</button>
+        <div id="result" class="mt-4 text-lg font-semibold"></div>
+    </div>
+
+    <script>
+        document.getElementById('convert-btn').addEventListener('click', function () {
+            const temperatureInput = document.getElementById('temperature').value.trim();
+            const unit = document.getElementById('unit').value;
+            const errorMsg = document.getElementById('error-msg');
+            const resultDisplay = document.getElementById('result');
+            let convertedTemp;
+
+            // Clear previous error message
+            errorMsg.classList.add('hidden');
+
+            // Validate temperature input
+            if (!temperatureInput || isNaN(temperatureInput)) {
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+
+            const temperature = parseFloat(temperatureInput);
+
+            // Perform temperature conversion
+            switch (unit) {
+                case 'celsius':
+                    convertedTemp = (temperature - 32) * 5 / 9;
+                    resultDisplay.textContent = `${convertedTemp.toFixed(2)} °C`;
+                    break;
+                case 'fahrenheit':
+                    convertedTemp = (temperature * 9 / 5) + 32;
+                    resultDisplay.textContent = `${convertedTemp.toFixed(2)} °F`;
+                    break;
+                case 'kelvin':
+                    convertedTemp = temperature + 273.15;
+                    resultDisplay.textContent = `${convertedTemp.toFixed(2)} K`;
+                    break;
+                default:
+                    break;
+            }
+        });
+    </script>
+</body>
+
+
+
+</html>
